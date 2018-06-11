@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.checkUpService.persistence.TCheckItemMapper">
+  <resultMap id="BaseResultMap" type="TCheckItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="check_list_code" jdbcType="VARCHAR" property="checkListCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, delete_flag, item_name, item_code, check_list_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_check_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_check_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="TCheckItem">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_check_item (id, delete_flag, item_name, 
+      item_code, check_list_code)
+    values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemCode,jdbcType=VARCHAR}, #{checkListCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="TCheckItem">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_check_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="deleteFlag != null">
+        delete_flag,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="itemCode != null">
+        item_code,
+      </if>
+      <if test="checkListCode != null">
+        check_list_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null">
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkListCode != null">
+        #{checkListCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TCheckItem">
+    update t_check_item
+    <set>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null">
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkListCode != null">
+        check_list_code = #{checkListCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TCheckItem">
+    update t_check_item
+    set delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      item_code = #{itemCode,jdbcType=VARCHAR},
+      check_list_code = #{checkListCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

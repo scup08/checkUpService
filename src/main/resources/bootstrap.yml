@@ -1,0 +1,17 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: checkUpService
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.26.128:3306/check_db?useSSL=false
+    username: root
+    password: root
+server:
+  port: 9090
+mybatis:
+  typeAliasesPackage: com.lzh.checkUpService.model.entity
+  mapperLocations: classpath:mapper/*Mapper.xml
