@@ -11,6 +11,7 @@ import com.lzh.common.annotation.MyBatisRepository;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients
 @MapperScan(basePackages = "com.lzh.checkUpService.persistence", annotationClass = MyBatisRepository.class)
 public class CheckUpServiceApplication {
 
